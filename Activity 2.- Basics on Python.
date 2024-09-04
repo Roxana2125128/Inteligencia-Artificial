@@ -1,1 +1,195 @@
 **FUNDAMENTAL ACTIVITY NO.2**
+*Fudamental Activity 2. BASICS ON PYTHON *
+Roxana Pamela Martinez Cordova #2125128 Mar N4
+
+Instructions:
+
+Work on the next exercises:
+
+1. Text Analysis Tool: Create a Python program that reads a text file and performs various analyses on its content. The program should: Count the number of words, sentences, and paragraphs. Calculate the average word length. Identify the most common words and their frequencies.
+
+[9]
+17 s
+from collections import Counter
+import re
+text = input(" insert the text: ")
+word_list = text.split()
+print("the amount of words is:" , len(word_list))
+ insert the text: La biomédica es un campo interdisciplinario que combina conocimientos de la biología, la medicina y la ingeniería para desarrollar soluciones tecnológicas que mejoren la salud y el bienestar de las personas. Este campo abarca desde la creación de dispositivos médicos, como marcapasos y prótesis, hasta el desarrollo de técnicas avanzadas de diagnóstico por imagen, como resonancias magnéticas y ultrasonidos.
+the amount of words is: 59
+
+[10]
+0 s
+sentence_list = text.split(". ")
+print("the amount of sentences is:" , len(sentence_list))
+the amount of sentences is: 2
+
+[11]
+0 s
+paragraph_list = text.split("\n")
+print("the amount of paragraphs is:" , len(paragraph_list))
+
+the amount of paragraphs is: 1
+
+[12]
+0 s
+words = re.findall(r'\b\w+\b', text.lower())
+total_length = sum(len(word) for word in words)
+average_word_length = total_length / len(words)
+word_counts = Counter(words)
+most_common_words = word_counts.most_common()
+print("the most common words are:" , most_common_words)
+print("the average word length is:" , average_word_length)
+
+the most common words are: [('la', 6), ('de', 5), ('y', 4), ('campo', 2), ('que', 2), ('el', 2), ('como', 2), ('biomédica', 1), ('es', 1), ('un', 1), ('interdisciplinario', 1), ('combina', 1), ('conocimientos', 1), ('biología', 1), ('medicina', 1), ('ingeniería', 1), ('para', 1), ('desarrollar', 1), ('soluciones', 1), ('tecnológicas', 1), ('mejoren', 1), ('salud', 1), ('bienestar', 1), ('las', 1), ('personas', 1), ('este', 1), ('abarca', 1), ('desde', 1), ('creación', 1), ('dispositivos', 1), ('médicos', 1), ('marcapasos', 1), ('prótesis', 1), ('hasta', 1), ('desarrollo', 1), ('técnicas', 1), ('avanzadas', 1), ('diagnóstico', 1), ('por', 1), ('imagen', 1), ('resonancias', 1), ('magnéticas', 1), ('ultrasonidos', 1)]
+the average word length is: 5.8474576271186445
+2.** Hangman Game:** Create a Python program that allows a user to play the game of Hangman.
+
+[6]
+1 m
+import random
+
+def guessword():
+    words = ["rosa", "blanco", "azul", "naranja", "verde"]
+    return random.choice(words)
+
+def play(words):
+    cpalabra = "." * len(words)
+    guess = False
+    ladivina = []
+    padivina = []
+    intentos = 6
+
+    print("¡Vamos a jugar ahorcado!")
+    print(f"Palabra: {cpalabra}")
+    print(f"Intentos restantes: {intentos}")
+    print("\n")
+
+    while not guess and intentos > 0:
+        prueba = input("Adivina una letra: ").lower()
+        if len(prueba) == 1 and prueba.isalpha():
+            if prueba in ladivina:
+                print(f"Ya adivinaste la letra {prueba}")
+            elif prueba not in words:
+                print(f"{prueba} no es parte de la palabra.")
+                intentos -= 1
+                ladivina.append(prueba)
+            else:
+                print(f"Excelente, {prueba}")
+                ladivina.append(prueba)
+                lista = list(cpalabra)
+                indices = [i for i, letra in enumerate(words) if letra == prueba]
+                for index in indices:
+                    lista[index] = prueba
+                cpalabra = "".join(lista)
+                if "." not in cpalabra:
+                    guess = True
+        elif len(prueba) == len(words) and prueba.isalpha():
+            if prueba in padivina:
+                print(f"Ya adivinaste la palabra {prueba}")
+            elif prueba != palabras:
+                print(f"{prueba} no es la palabra.")
+                intentos -= 1
+                padivina.append(prueba)
+            else:
+                guess = True
+                cpalabra = palabras
+        else:
+            print("Entrada no válida.")
+
+        print(f"Palabra: {cpalabra}")
+        print(f"Intentos restantes: {intentos}")
+        print("\n")
+
+    if guess:
+        print(f"GANASTE!, la palabra era {words}")
+    else:
+        print(f"Ya no tienes intentos. La palabra era {words}")
+
+if __name__ == "__main__":
+    words = guessword()
+    play(words)
+    
+¡Vamos a jugar ahorcado!
+Palabra: .....
+Intentos restantes: 6
+
+
+Adivina una letra: a
+a no es parte de la palabra.
+Palabra: .....
+Intentos restantes: 5
+
+
+Adivina una letra: n
+n no es parte de la palabra.
+Palabra: .....
+Intentos restantes: 4
+
+
+Adivina una letra: t
+t no es parte de la palabra.
+Palabra: .....
+Intentos restantes: 3
+
+
+Adivina una letra: p
+p no es parte de la palabra.
+Palabra: .....
+Intentos restantes: 2
+
+
+Adivina una letra: r
+Excelente, r
+Palabra: ..r..
+Intentos restantes: 2
+
+
+Adivina una letra: d
+Excelente, d
+Palabra: ..rd.
+Intentos restantes: 2
+
+
+Adivina una letra: f
+f no es parte de la palabra.
+Palabra: ..rd.
+Intentos restantes: 1
+
+
+Adivina una letra: h
+h no es parte de la palabra.
+Palabra: ..rd.
+Intentos restantes: 0
+
+
+Ya no tienes intentos. La palabra era verde
+3. **Number Guessing Game:** Create a program that generates a random number between 1 and 100
+
+[5]
+41 s
+import random
+
+def guessnumber():
+    numero = random.randint(1, 100)
+    guess = False
+
+    print("Guess the number")
+    print("Adivina el numero del 1-100 que he elejido.")
+
+    while not guess:
+
+Guess the number
+Adivina el numero del 1-100 que he elejido.
+¿Que numero crees que es?: 50
+Muy bajo. Intenta de nuevo.
+¿Que numero crees que es?: 85
+Muy bajo. Intenta de nuevo.
+¿Que numero crees que es?: 99
+Muy alto. Intenta de nuevo.
+¿Que numero crees que es?: 94
+Muy alto. Intenta de nuevo.
+¿Que numero crees que es?: 87
+Muy alto. Intenta de nuevo.
+¿Que numero crees que es?: 86
+EXCELENTE! el numero era 86.
